@@ -25,7 +25,13 @@ export class Triangle implements Figure {
     public b: number,
     public c: number,
   ) {
-    this.shape = ShapeType.Triangle;
+    if (a <= 0 || b <= 0 || c <= 0) {
+      throw new Error('All sides must be greater than 0');
+    }
+
+    if (a + b <= c || a + c <= b || b + c <= a) {
+      throw new Error(`Sides ${a}, ${b}, and ${c} can't form a valid triangle`);
+    }
   }
 
   getArea(): number {
@@ -41,33 +47,37 @@ export class Triangle implements Figure {
 }
 
 export class Circle implements Figure {
-  public shape;
+  public shape = ShapeType.Circle;
 
   constructor(
     public color: FigureColor,
     public radius: number,
   ) {
-    this.shape = ShapeType.Circle;
+    if (radius <= 0) {
+      throw new Error('Radius must be greater than 0');
+    }
   }
 
   getArea(): number {
-    return +(3.14 * this.radius ** 2).toFixed(2);
+    return +(Math.PI * this.radius ** 2).toFixed(2);
   }
 }
 
 export class Rectangle implements Figure {
-  public shape;
+  public shape = ShapeType.Rectangle;
 
   constructor(
     public color: FigureColor,
     public width: number,
-    public heigh: number,
+    public height: number,
   ) {
-    this.shape = ShapeType.Rectangle;
+    if (width <= 0 || height <= 0) {
+      throw new Error('Width and height must be greater than 0');
+    }
   }
 
   getArea(): number {
-    return +(this.width * this.heigh).toFixed(2);
+    return +(this.width * this.height).toFixed(2);
   }
 }
 
